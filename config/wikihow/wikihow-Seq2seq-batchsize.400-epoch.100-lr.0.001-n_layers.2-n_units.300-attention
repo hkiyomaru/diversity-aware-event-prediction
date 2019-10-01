@@ -1,0 +1,48 @@
+{
+    "data": {
+        "base": "data/wikihow",
+        "train": "data/wikihow/train.tsv-*",
+        "train_source": "data/wikihow/train.source",
+        "train_target": "data/wikihow/train.target",
+        "valid_source": "data/wikihow/dev.source",
+        "valid_target": "data/wikihow/dev.target",
+        "test_source": "data/wikihow/test.source",
+        "test_target": "data/wikihow/test.target",
+        "vocabulary": "data/wikihow/vocab.txt",
+        "source_word_embedding": "data/wikihow/source_embedding.bin",
+        "target_word_embedding": "data/wikihow/target_embedding.bin",
+        "lang": "en"
+    },
+    "arch": {
+        "type": "Seq2seq",
+        "args": {
+            "n_layers": 2,
+            "n_units": 300,
+            "n_source_vocab": 30000,
+            "n_target_vocab": 30000,
+            "n_source_embed": 300,
+            "n_target_embed": 300,
+            "attention": true,
+            "reconstruction": false,
+            "reverse": false
+        }
+    },
+    "updater": {
+        "type": "StandardUpdater",
+        "args": {}
+    },
+    "param": {
+        "batchsize": 400,
+        "epoch": 100,
+        "learning_rate": 0.001,
+        "min_source_sentence": 1,
+        "max_source_sentence": 25,
+        "min_target_sentence": 1,
+        "max_target_sentence": 25,
+        "log_interval": 1,
+        "validation_interval": 1,
+        "patients": 5,
+        "output": "wikihow-Seq2seq-batchsize.400-epoch.100-lr.0.001-n_layers.2-n_units.300-attention",
+        "result": "result/wikihow"
+    }
+}

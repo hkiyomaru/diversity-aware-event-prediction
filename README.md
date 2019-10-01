@@ -42,13 +42,13 @@ $ pipenv run python src/train.py "config/descript/descript-Seq2seq-batchsize.64-
 To evaluate trained models, run `./src/test.py` with a glob pattern for result directories.
 
 ```
-$ pipenv run python src/test.py "config/descript/*"  # specify a pattern to glob result directories
+$ pipenv run python src/test.py "./result/descript/*"  # specify a pattern to glob result directories
 ```
 
 To evaluate trained models leaned with different random seeds, run `./src/test.py` with multiple glob patterns for result directories.
 
 ```
-$ pipenv run python src/test.py "config/descript-1/*" "config/descript-2/*" "config/descript-3/*"
+$ pipenv run python src/test.py "./result/descript-1/*" "./result/descript-2/*" "config/descript-3/*"
 ```
 
 ### Generation
@@ -56,7 +56,7 @@ $ pipenv run python src/test.py "config/descript-1/*" "config/descript-2/*" "con
 To generate next events with a trained model, run `./src/generate_interactively.py` with a glob pattern for result directories.
 
 ```
-$ pipenv run python src/generate_interactively.py "config/descript/*"
+$ pipenv run python src/generate_interactively.py "./result/descript/*"
 ```
 
 ## Reference

@@ -136,8 +136,8 @@ def main() -> None:
         test_source_path = config['data']['test_source']
         test_target_path = config['data']['test_target']
     else:
-        test_source_path = os.path.join(config['data']['base'], 'amt.test.source')
-        test_target_path = os.path.join(config['data']['base'], 'amt.test.target')
+        test_source_path = os.path.join(config['data']['base'], 'mturk.source')
+        test_target_path = os.path.join(config['data']['base'], 'mturk.target')
     test_source = load_data(word_ids, test_source_path, debug=args.debug)
     test_target = load_data(word_ids, test_target_path, debug=args.debug)
     assert len(test_source) == len(test_target)

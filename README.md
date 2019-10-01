@@ -59,6 +59,11 @@ To generate next events with a trained model, run `./src/generate_interactively.
 $ pipenv run python src/generate_interactively.py "./result/descript/*"
 ```
 
+## License
+
+- code: MIT License
+- data: GNU General Public License, version 2
+
 ## Reference
 
 ```

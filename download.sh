@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-SCRIPT=$(readlink -f $0)
+SCRIPT=$(readlink -f "$0")
 SCRIPT_PATH=$(dirname "${SCRIPT}")
 
 # download datasets
@@ -14,7 +14,7 @@ wget "https://s3.amazonaws.com/dl4j-distribution/GoogleNews-vectors-negative300.
 gunzip "${SCRIPT_PATH}/data/share/GoogleNews-vectors-negative300.bin.gz"
 
 # add symlinks
-ln -s "${SCRIPT_PATH}/data/share/GoogleNews-vectors-negative300.bin.gz" "${SCRIPT_PATH}/data/descript/source_embedding.bin"
-ln -s "${SCRIPT_PATH}/data/share/GoogleNews-vectors-negative300.bin.gz" "${SCRIPT_PATH}/data/descript/target_embedding.bin"
-ln -s "${SCRIPT_PATH}/data/share/GoogleNews-vectors-negative300.bin.gz" "${SCRIPT_PATH}/data/wikihow/source_embedding.bin"
-ln -s "${SCRIPT_PATH}/data/share/GoogleNews-vectors-negative300.bin.gz" "${SCRIPT_PATH}/data/wikihow/target_embedding.bin"
+ln -s "${SCRIPT_PATH}/data/share/GoogleNews-vectors-negative300.bin" "${SCRIPT_PATH}/data/descript/source_embedding.bin"
+ln -s "${SCRIPT_PATH}/data/share/GoogleNews-vectors-negative300.bin" "${SCRIPT_PATH}/data/descript/target_embedding.bin"
+ln -s "${SCRIPT_PATH}/data/share/GoogleNews-vectors-negative300.bin" "${SCRIPT_PATH}/data/wikihow/source_embedding.bin"
+ln -s "${SCRIPT_PATH}/data/share/GoogleNews-vectors-negative300.bin" "${SCRIPT_PATH}/data/wikihow/target_embedding.bin"

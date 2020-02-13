@@ -29,8 +29,8 @@ $ ./download.sh  # the resultant data size will be 3.5GB
 
 ### Training
 
-The configuration used in the experiments are in `./config`.
-To start training, run `./src/train.py` with a configuration.
+The configuration files used in the experiments are in `./config`.
+To start training, run `./src/train.py` with a configuration file.
 The results will be written into `./result`
 
 ```
@@ -39,21 +39,21 @@ $ pipenv run python src/train.py "config/descript/descript-Seq2seq-batchsize.64-
 
 ### Test
 
-To evaluate trained models, run `./src/test.py` with a glob pattern for result directories.
+To evaluate trained models, run `./src/test.py` with a glob pattern to grep result directories.
 
 ```
 $ pipenv run python src/test.py "./result/descript/*"  # specify a pattern to glob result directories
 ```
 
-To evaluate trained models leaned with different random seeds, run `./src/test.py` with multiple glob patterns for result directories.
+To evaluate trained models leaned with different random seeds, run `./src/test.py` with multiple glob patterns.
 
 ```
-$ pipenv run python src/test.py "./result/descript-1/*" "./result/descript-2/*" "config/descript-3/*"
+$ pipenv run python src/test.py "./result/descript-seed-0/*" "./result/descript-seed-1/*" "config/descript-seed-2/*"
 ```
 
 ### Generation
 
-To generate next events with a trained model, run `./src/generate_interactively.py` with a glob pattern for result directories.
+To generate next events using a trained model, run `./src/generate_interactively.py` with a glob pattern to grep result directories.
 
 ```
 $ pipenv run python src/generate_interactively.py "./result/descript/*"
@@ -67,7 +67,7 @@ $ pipenv run python src/generate_interactively.py "./result/descript/*"
 ## Reference
 
 ```
-Hirokazu Kiyomaru, Kazumasa Omura, Yugo Murawaki, Daisuke Kawahara and Sadao Kurohashi:
-Diversity-aware Event Prediction based on a Conditional Variational Autoencoder with Reconstruction,
-Proceedings of COIN: COmmonsense INference in Natural Language Processing, Hong Kong, 2019.
+Hirokazu Kiyomaru, Kazumasa Omura, Yugo Murawaki, Daisuke Kawahara and Sadao Kurohashi.
+Diversity-aware Event Prediction based on a Conditional Variational Autoencoder with Reconstruction.
+In Proceedings of the First Workshop on Commonsense Inference in Natural Language Processing (COIN), pp. 113-122, Hong Kong, November 2019.
 ```

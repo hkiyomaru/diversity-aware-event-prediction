@@ -1,24 +1,20 @@
 # Diversity-aware Event Prediction based on a Conditional Variational Autoencoder with Reconstruction
 
+A reimplementation of Kiyomaru et al. (2019) using BART (Lewis+, 2019).
+
 ## Development Environment
 
-- Ubuntu 16.04
-- Python 3.6.5
-- chainer 5.4.0
-- cupy 5.4.0
-- gensim 3.8.0
-- scipy 1.3.0
-- nltk 3.4.5
-- pandas 0.25.0
-- progressbar2 3.42.0
+- Ubuntu 20.04
+- Python 3.9.7
+- torch 1.10
+- transformers 4.15.0
 
 ## Getting Started
 
 ### Installation
 
 ```
-$ pip install pipenv --user
-$ pipenv install
+$ poetry install
 ```
 
 ### Downloading Dataset
@@ -33,9 +29,7 @@ The configuration files used in the experiments are in `./config`.
 To start training, run `./src/train.py` with a configuration file.
 The results will be written into `./result`
 
-```
-$ pipenv run python src/train.py "config/descript/descript-Seq2seq-batchsize.64-epoch.100-lr.0.001-n_layers.2-n_units.300"
-```
+TBW
 
 ### Test
 

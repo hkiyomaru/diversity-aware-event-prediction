@@ -5,9 +5,9 @@ import sys
 from time import gmtime
 from time import strftime
 
-import chainer
+# import chainer
 import numpy
-import gensim
+# import gensim
 
 from utils.constants import UNK
 

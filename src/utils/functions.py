@@ -1,24 +1,24 @@
 from typing import List, Callable
 import numpy
-from scipy.stats import chi2
-import chainer
-import chainer.functions as F
+# from scipy.stats import chi2
+# import chainer
+# import chainer.functions as F
 
 from utils import UNK, EOS
 
 
-def calculate_ln_hypervolume(ln_var: chainer.Variable, alpha: float) -> chainer.Variable:
-    _, n_units = ln_var.shape
-    xp = chainer.backends.cuda.get_array_module(ln_var)
-
-    def ln_gamma(z):
-        return xp.sum(xp.log(xp.arange(1, z)))
-
-    ln_hv = xp.log(2) + (n_units * xp.log(xp.pi)) / 2 \
-        - (xp.log(n_units) + ln_gamma(n_units / 2)) \
-        + (n_units * xp.log(chi2.ppf(alpha, n_units))) / 2 \
-        + F.sum(ln_var, axis=1)
-    return ln_hv
+# def calculate_ln_hypervolume(ln_var: chainer.Variable, alpha: float) -> chainer.Variable:
+#     _, n_units = ln_var.shape
+#     xp = chainer.backends.cuda.get_array_module(ln_var)
+#
+#     def ln_gamma(z):
+#         return xp.sum(xp.log(xp.arange(1, z)))
+#
+#     ln_hv = xp.log(2) + (n_units * xp.log(xp.pi)) / 2 \
+#         - (xp.log(n_units) + ln_gamma(n_units / 2)) \
+#         + (n_units * xp.log(chi2.ppf(alpha, n_units))) / 2 \
+#         + F.sum(ln_var, axis=1)
+#     return ln_hv
 
 
 def mask_unk(wy: numpy.ndarray) -> numpy.ndarray:

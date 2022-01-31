@@ -4,7 +4,7 @@ import collections
 
 import numpy
 from nltk.translate import bleu_score, nist_score
-import chainer
+# import chainer
 
 
 def get_bleu_precision_func(rs_list: List[List[List[int]]],
@@ -154,109 +154,109 @@ def _flatten(l):
     return [e for sl in l for e in sl]
 
 
-class CalculateMetrics(chainer.training.Extension):
-
-    trigger = 1, 'epoch'
-    priority = chainer.training.PRIORITY_WRITER
-
-    def __init__(self, model, test_data, keys, functions, batch=100, device=-1, max_length=100):
-        self.model = model
-        self.test_data = test_data
-        self.keys = keys
-        self.functions = functions
-        self.batch = batch
-        self.device = device
-        self.max_length = max_length
-
-    def __call__(self, trainer):
-        with chainer.no_backprop_mode():
-            references = []
-            hypotheses = []
-            for i in range(0, len(self.test_data), self.batch):
-                sources, targets = zip(*self.test_data[i:i + self.batch])
-                references.extend([[t.tolist()] for t in targets])
-
-                sources = [
-                    chainer.dataset.to_device(self.device, x) for x in sources]
-                ys = [y.tolist()
-                      for y in self.model.translate(sources, self.max_length, sampling=False)]
-                hypotheses.extend(ys)
-
-        for key, function in zip(self.keys, self.functions):
-            chainer.report({key: function(references, hypotheses)})
-
-
-class CalculateBleu(chainer.training.Extension):
-
-    trigger = 1, 'epoch'
-    priority = chainer.training.PRIORITY_WRITER
-
-    def __init__(
-            self, model, test_data, key, batch=100, device=-1, max_length=100):
-        self.model = model
-        self.test_data = test_data
-        self.key = key
-        self.batch = batch
-        self.device = device
-        self.max_length = max_length
-
-    def __call__(self, trainer):
-        with chainer.no_backprop_mode():
-            references = []
-            hypotheses = []
-            for i in range(0, len(self.test_data), self.batch):
-                sources, targets = zip(*self.test_data[i:i + self.batch])
-                references.extend([[t.tolist()] for t in targets])
-
-                sources = [
-                    chainer.dataset.to_device(self.device, x) for x in sources]
-                ys = [y.tolist()
-                      for y in self.model.translate(sources, self.max_length, sampling=False)]
-                hypotheses.extend(ys)
-
-        bleu = bleu_score.corpus_bleu(
-            references, hypotheses,
-            smoothing_function=bleu_score.SmoothingFunction().method1)
-        chainer.report({self.key: bleu})
-
-
-class CalculateDistinctN(chainer.training.Extension):
-
-    trigger = 1, 'epoch'
-    priority = chainer.training.PRIORITY_WRITER
-
-    def __init__(
-            self, model, test_data, key, n=1, batch=100, device=-1, max_length=100):
-        self.model = model
-        self.test_data = test_data
-        self.key = key
-        self.n = n
-        self.batch = batch
-        self.device = device
-        self.max_length = max_length
-
-    def __call__(self, trainer):
-        with chainer.no_backprop_mode():
-            hypotheses = []
-            for i in range(0, len(self.test_data), self.batch):
-                sources, _ = zip(*self.test_data[i:i + self.batch])
-
-                sources = [
-                    chainer.dataset.to_device(self.device, x) for x in sources]
-                ys = [y.tolist()
-                      for y in self.model.translate(sources, self.max_length, sampling=False)]
-                hypotheses.extend(ys)
-
-        distinct_n = self.distinct_n(hypotheses)
-        chainer.report({self.key: distinct_n})
-
-    def distinct_n(self, hypotheses):
-        ngrams = [self.ngram(s, self.n) for s in hypotheses]
-        n_ngrams = sum([len(e) for e in ngrams])
-        unique_ngrams = [set(e) for e in ngrams]
-        n_unique_ngrams = len(set.union(*unique_ngrams))
-        return n_unique_ngrams / n_ngrams if n_ngrams > 0 else 0
-
-    @staticmethod
-    def ngram(s, n):
-        return list(zip(*(s[i:] for i in range(n))))
+# class CalculateMetrics(chainer.training.Extension):
+#
+#     trigger = 1, 'epoch'
+#     priority = chainer.training.PRIORITY_WRITER
+#
+#     def __init__(self, model, test_data, keys, functions, batch=100, device=-1, max_length=100):
+#         self.model = model
+#         self.test_data = test_data
+#         self.keys = keys
+#         self.functions = functions
+#         self.batch = batch
+#         self.device = device
+#         self.max_length = max_length
+#
+#     def __call__(self, trainer):
+#         with chainer.no_backprop_mode():
+#             references = []
+#             hypotheses = []
+#             for i in range(0, len(self.test_data), self.batch):
+#                 sources, targets = zip(*self.test_data[i:i + self.batch])
+#                 references.extend([[t.tolist()] for t in targets])
+#
+#                 sources = [
+#                     chainer.dataset.to_device(self.device, x) for x in sources]
+#                 ys = [y.tolist()
+#                       for y in self.model.translate(sources, self.max_length, sampling=False)]
+#                 hypotheses.extend(ys)
+#
+#         for key, function in zip(self.keys, self.functions):
+#             chainer.report({key: function(references, hypotheses)})
+#
+#
+# class CalculateBleu(chainer.training.Extension):
+#
+#     trigger = 1, 'epoch'
+#     priority = chainer.training.PRIORITY_WRITER
+#
+#     def __init__(
+#             self, model, test_data, key, batch=100, device=-1, max_length=100):
+#         self.model = model
+#         self.test_data = test_data
+#         self.key = key
+#         self.batch = batch
+#         self.device = device
+#         self.max_length = max_length
+#
+#     def __call__(self, trainer):
+#         with chainer.no_backprop_mode():
+#             references = []
+#             hypotheses = []
+#             for i in range(0, len(self.test_data), self.batch):
+#                 sources, targets = zip(*self.test_data[i:i + self.batch])
+#                 references.extend([[t.tolist()] for t in targets])
+#
+#                 sources = [
+#                     chainer.dataset.to_device(self.device, x) for x in sources]
+#                 ys = [y.tolist()
+#                       for y in self.model.translate(sources, self.max_length, sampling=False)]
+#                 hypotheses.extend(ys)
+#
+#         bleu = bleu_score.corpus_bleu(
+#             references, hypotheses,
+#             smoothing_function=bleu_score.SmoothingFunction().method1)
+#         chainer.report({self.key: bleu})
+#
+#
+# class CalculateDistinctN(chainer.training.Extension):
+#
+#     trigger = 1, 'epoch'
+#     priority = chainer.training.PRIORITY_WRITER
+#
+#     def __init__(
+#             self, model, test_data, key, n=1, batch=100, device=-1, max_length=100):
+#         self.model = model
+#         self.test_data = test_data
+#         self.key = key
+#         self.n = n
+#         self.batch = batch
+#         self.device = device
+#         self.max_length = max_length
+#
+#     def __call__(self, trainer):
+#         with chainer.no_backprop_mode():
+#             hypotheses = []
+#             for i in range(0, len(self.test_data), self.batch):
+#                 sources, _ = zip(*self.test_data[i:i + self.batch])
+#
+#                 sources = [
+#                     chainer.dataset.to_device(self.device, x) for x in sources]
+#                 ys = [y.tolist()
+#                       for y in self.model.translate(sources, self.max_length, sampling=False)]
+#                 hypotheses.extend(ys)
+#
+#         distinct_n = self.distinct_n(hypotheses)
+#         chainer.report({self.key: distinct_n})
+#
+#     def distinct_n(self, hypotheses):
+#         ngrams = [self.ngram(s, self.n) for s in hypotheses]
+#         n_ngrams = sum([len(e) for e in ngrams])
+#         unique_ngrams = [set(e) for e in ngrams]
+#         n_unique_ngrams = len(set.union(*unique_ngrams))
+#         return n_unique_ngrams / n_ngrams if n_ngrams > 0 else 0
+#
+#     @staticmethod
+#     def ngram(s, n):
+#         return list(zip(*(s[i:] for i in range(n))))

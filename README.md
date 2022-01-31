@@ -29,7 +29,13 @@ The configuration files used in the experiments are in `./config`.
 To start training, run `./src/train.py` with a configuration file.
 The results will be written into `./result`
 
-TBW
+```
+$ poetry run python src/train_bart.py  --model_name_or_path facebook/bart-base --text_column source --summary_column target --train_file data/descript/train.json --validation_file data/descript/dev.json --test_file data/descript/test.json --do_train --do_predict --predict_with_generate --per_device_train_batch_size 4 --per_device_eval_batch_size 4 --output_dir <output-dir>
+```
+
+```
+$ poetry run python src/generate_bart.py --model_name_or_path <output-dir> --output_dir ./result
+```
 
 ### Test
 
